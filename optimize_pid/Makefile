@@ -3,7 +3,7 @@ SRC_DIR = .
 SRC = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(SRC)))
 
-CC = g++
+CC = /usr/bin/gcc-7.2.0/bin/g++-7.2.0
 CFLAGS = -Wall -Werror -Wextra -O1 -std=c++14 -I..
 
 

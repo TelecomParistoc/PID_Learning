@@ -13,10 +13,10 @@
 
 //binding with libmotors
 void set_linear_p(uint32_t p){
-  SetLinearP(p);
+  setLinearP(p);
 }
 void set_linear_i(uint32_t i){
-  SetLinearI(i);
+  setLinearI(i);
 }
 void set_linear_d(uint32_t d){
   setLinearD(d);

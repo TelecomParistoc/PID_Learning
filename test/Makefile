@@ -6,9 +6,9 @@ BINS = $(patsubst %.cpp, %, $(SRCS))
 BUILD = build
 ADDITIONAL = logs
 
-CC = g++
+CC = /usr/bin/gcc-7.2.0/bin/g++-7.2.0 #g++
 CFLAGS = -Wall -Werror -Wextra -O1 -std=c++14 -I.. -g
-LDFLAGS =
+LDFLAGS =-lmotors -lrobotutils
 
 
 .PHONY: all clean $(BUILD)
