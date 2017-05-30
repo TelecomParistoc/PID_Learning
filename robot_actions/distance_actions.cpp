@@ -5,7 +5,7 @@
 #include <cmath>
 
 #define DIST_TO_MOVE 800
-#define DELAY_THRESHOLD 4000000.0*((double)DIST_TO_MOVE/200.0) //4000000 microseconds = 4 seconds to move
+#define DELAY_THRESHOLD 3000000.0*((double)DIST_TO_MOVE/200.0) //4000000 microseconds = 4 seconds to move
 #define SPEED_DIFFERENTIAL_THRESHOLD 100.0*((double)DIST_TO_MOVE/2000.0)  // TODO: fix it
 
 

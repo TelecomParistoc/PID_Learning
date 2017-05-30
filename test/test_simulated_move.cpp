@@ -9,7 +9,7 @@
 #define DEBUG true
 
 #define REDUCTOR_P 1200
-#define REDUCTOR_I 300
+#define REDUCTOR_I 100
 #define REDUCTOR_D 14000
 
 
