@@ -9,7 +9,8 @@
 #define DEBUG true
 
 #define REDUCTOR_P 1000
-#define REDUCTOR_I_D 10000
+#define REDUCTOR_I 200
+#define REDUCTOR_D 12000
 
 
 
@@ -31,12 +32,11 @@ int main(int argc, char* argv[])
     // std::cout<<"Best fake PID found is : ("<<best_pid.p<<", "<<best_pid.i<<", "<<best_pid.d<<")"<<std::endl;
 
 
-    setPosition(X_ORIGIN, Y_ORIGIN);
     Simulated_annealing_on_PID experiment(  std::bind(reset_pid_distance, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
                                             std::bind(move_and_measure_distance, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
                                             1000.0,
                                             PID{700, 0, 0},  100, 1000, 0.1,
-                                            REDUCTOR_P/2, REDUCTOR_I_D/2, REDUCTOR_I_D/2);
+                                            REDUCTOR_P/2, REDUCTOR_I/2, REDUCTOR_D/2);
     experiment.start();
 
     auto best_pid = experiment.best();

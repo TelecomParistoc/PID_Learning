@@ -20,9 +20,9 @@ void set_linear_d(uint32_t d)
 
 void reset_pid_distance(uint32_t p, uint32_t i, uint32_t d)
 {
-    set_linear_p(700);
-    set_linear_i(0);
-    set_linear_d(0);
+    set_linear_p(p);
+    set_linear_i(i);
+    set_linear_d(d);
 }
 
 
@@ -53,10 +53,10 @@ void move_to_callback()
 
 void move_until_wall()
 {
-    move_to_done = false;
-    moveTo(X_ORIGIN, Y_ORIGIN, -1, move_to_callback);
-    while(!move_to_done)
-        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    //move_to_done = false;
+    //move(-DIST_TO_MOVE+20, move_to_callback);
+    //while(!move_to_done)
+    //    std::this_thread::sleep_for(std::chrono::milliseconds(20));
 
     wait_wall_touched = true;
     moveUntilWall(DIR_BACKWARD, wall_touched);
@@ -121,7 +121,7 @@ bool move_and_measure_distance(double& total_delay, double& integrated_different
 
     move_until_wall();
 
-    printf("Reached ? %d\n", reached);
+    printf("Reached ? %d %f %f %f\n", reached, return_pid.p, return_pid.i, return_pid.d);
     std::this_thread::sleep_for(std::chrono::milliseconds(3000));
     printf("Waited\n");
 
