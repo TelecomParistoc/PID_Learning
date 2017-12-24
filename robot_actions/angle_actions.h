@@ -2,7 +2,10 @@
 #define ANGLE_ACTIONS_H
 
 
-void reset_pid_angle(uint8_t p, uint8_t i, uint8_t d);
+#include <stdint.h>
+
+
+void reset_pid_angle(uint32_t p, uint32_t i, uint32_t d);
 bool move_and_measure_angle(double& diff_with_target, double& integrated_differential);
 
 
