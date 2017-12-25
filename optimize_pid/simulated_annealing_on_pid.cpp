@@ -7,6 +7,7 @@ Simulated_annealing_on_PID::Simulated_annealing_on_PID(const std::function<void(
     _k(k),
     _k_prim(k_prim),
     _initial_pid(initial_pid),
+    _best_weight(-1),
     _initial_temperature(initial_temperature),
     _n_iterations(n_iterations),
     _generator(_random_device()),
@@ -14,19 +15,19 @@ Simulated_annealing_on_PID::Simulated_annealing_on_PID(const std::function<void(
     _distrib_i(-I_interval/2, I_interval/2),
     _distrib_d(-D_interval/2, D_interval/2)
 {
-    _coeff = exp(log(target)/(double)(_n_iterations))>0.99999999?0.99999999:exp(log(target)/(double)(_n_iterations)); // coeff^n_iterations = target (exp(n_iterations*ln(coeff)) = target)
+    _coeff = exp(log(target)/(double)(_n_iterations))>0.999999999?0.999999999:exp(log(target/_initial_temperature)/(double)(_n_iterations)); // coeff^n_iterations = target (exp(n_iterations*ln(coeff)) = target)
 }
 
 
 double Simulated_annealing_on_PID::weight(const PID& pid)
 {
-    if(pid.p < 0)
+    if(pid.p < 0 || pid.i < 0 || pid.d < 0)
     {
         logger::write_endline("Not weighted because pid.p is negative");
         return MAX;
     }
 
-    logger::write_endline("Testing PID ", pid.p, pid.i, pid.d);
+    logger::write_endline("Testing PID (", pid.p, ", ", pid.i, ", ", pid.d, ")");
     _reset_pid_function((uint32_t)pid.p, (uint32_t)pid.i, (uint32_t)pid.d);
 
     std::chrono::time_point<std::chrono::system_clock> begin = std::chrono::system_clock::now();
@@ -44,13 +45,13 @@ double Simulated_annealing_on_PID::weight(const PID& pid)
 
     double res = fabs(diff_goal)+_k*delay+_k_prim*integrated_differential;
 
-    logger::write_endline("Measured parameters :");
-    logger::write_endline("diff with goal :", diff_goal);
-    logger::write_endline("delay :", delay);
+    logger::write_endline("Measured parameters : ");
+    logger::write_endline("diff with goal : ", diff_goal);
+    logger::write_endline("delay : ", delay);
     logger::write_endline("differential : ", integrated_differential);
     logger::write_endline("Final weight : ", res);
 
-    if(res < _best_weight)
+    if(res < _best_weight || _best_weight < 0)
     {
         _best_pid = pid;
         _best_weight = res;

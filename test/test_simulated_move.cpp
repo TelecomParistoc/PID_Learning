@@ -22,8 +22,8 @@ int main(int argc, char* argv[])
 
     Simulated_annealing_on_PID experiment(  std::bind(reset_pid_fake, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
                                             std::bind(move_and_measure_fake, std::placeholders::_1, std::placeholders::_2),
-                                            0.005, 0.01,
-                                            PID{700, 0, 0},  100, 1000, 0.1,
+                                            0.005, 0.3,
+                                            PID{700, 0, 0}, 100, 3000, 0.1,
                                             REDUCTOR_P/2, REDUCTOR_I_D/2, REDUCTOR_I_D/2);
     experiment.start();
 
@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
     //                                         PID{700, 0, 0},  100, 1000, 0.1,
     //                                         REDUCTOR_P/2, REDUCTOR_I_D/2, REDUCTOR_I_D/2);
     // experiment.start();
-    // 
+    //
     // best_pid = experiment.best();
     // std::cout<<"Best angle PID found was : ("<<best_pid.p<<", "<<best_pid.i<<", "<<best_pid.d<<")"<<std::endl;
 

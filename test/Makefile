@@ -4,6 +4,7 @@ SRCS = $(wildcard *.cpp)
 BINS = $(patsubst %.cpp, %, $(SRCS))
 
 BUILD = build
+ADDITIONAL = logs
 
 CC = g++
 CFLAGS = -Wall -Werror -Wextra -O1 -std=c++14 -I.. -g
@@ -12,15 +13,16 @@ LDFLAGS =
 
 .PHONY: all clean $(BUILD)
 
-all : $(BUILD) $(OBJ_DIRS) $(BINS)
+all : $(BUILD) $(ADDITIONAL) $(OBJ_DIRS) $(BINS)
 
 % : %.cpp
-	echo $@
 	$(CC) $^ $(OBJS) $(CFLAGS) $(LDFLAGS) -o $(BUILD)/$@
 
 $(BUILD):
 	@mkdir -p $@
 
+$(ADDITIONAL):
+	@mkdir -p $@
 
 ../logging:
 	make -C $@ obj
@@ -33,6 +35,7 @@ $(BUILD):
 
 clean-soft:
 	@rm -rf $(BUILD)
+	@rm -rf $(ADDITIONAL)
 
 clean: clean-soft
 	@for dir in $(OBJ_DIRS) ; do \
