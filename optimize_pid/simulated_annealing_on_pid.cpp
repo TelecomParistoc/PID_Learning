@@ -1,7 +1,7 @@
 #include "simulated_annealing_on_pid.h"
 
 
-Simulated_annealing_on_PID::Simulated_annealing_on_PID(const std::function<void(uint32_t, uint32_t, uint32_t)>& reset_pid, const std::function<bool(double&, double&)>& move_and_measure, double k, double k_prim, const PID& initial_pid, double initial_temperature, size_t n_iterations, double target, double P_interval, double I_interval, double D_interval) :
+Simulated_annealing_on_PID::Simulated_annealing_on_PID(const std::function<void(uint32_t, uint32_t, uint32_t)>& reset_pid, const std::function<bool(double&, double&, const PID&)>& move_and_measure, double k, double k_prim, const PID& initial_pid, double initial_temperature, size_t n_iterations, double target, double P_interval, double I_interval, double D_interval) :
     _reset_pid_function(reset_pid),
     _move_and_measure_function(move_and_measure),
     _k(k),
@@ -15,7 +15,7 @@ Simulated_annealing_on_PID::Simulated_annealing_on_PID(const std::function<void(
     _distrib_i(-I_interval/2, I_interval/2),
     _distrib_d(-D_interval/2, D_interval/2)
 {
-    _coeff = exp(log(target / _initial_temperature)/(double)(_n_iterations))>0.999999999?0.999999999:exp(log(target/_initial_temperature)/(double)(_n_iterations)); // coeff^n_iterations = target/_initial_temperature
+    _coeff = exp(log(target/_initial_temperature)/(double)(_n_iterations))>0.999999999?0.999999999:exp(log(target/_initial_temperature)/(double)(_n_iterations)); // coeff^n_iterations = target/_initial_temperature
 }
 
 
@@ -34,7 +34,7 @@ double Simulated_annealing_on_PID::weight(const PID& pid)
 
     double diff_goal;
     double integrated_differential;
-    if(!_move_and_measure_function(diff_goal, integrated_differential)) // move failed or too much difference with target
+    if(!_move_and_measure_function(diff_goal, integrated_differential, _best_pid)) // if move failed or too much difference with target
     {
         logger::write_endline("Not weighted because move failed");
         return MAX;

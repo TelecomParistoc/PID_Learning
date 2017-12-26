@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
     logger::debug(DEBUG);
 
     Simulated_annealing_on_PID experiment(  std::bind(reset_pid_fake, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
-                                            std::bind(move_and_measure_fake, std::placeholders::_1, std::placeholders::_2),
+                                            std::bind(move_and_measure_fake, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
                                             0.005, 0.3,
                                             PID{700, 0, 0}, 100, 3000, 0.1,
                                             REDUCTOR_P/2, REDUCTOR_I_D/2, REDUCTOR_I_D/2);
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 
 
     // experiment = Simulated_annealing_on_PID(std::bind(reset_pid_distance, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
-    //                                         std::bind(move_and_measure_distance, std::placeholders::_1, std::placeholders::_2),
+    //                                         std::bind(move_and_measure_distance, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
     //                                         0.005, 0.01,
     //                                         PID{700, 0, 0},  100, 1000, 0.1,
     //                                         REDUCTOR_P/2, REDUCTOR_I_D/2, REDUCTOR_I_D/2);
@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
     //
     //
     // experiment = Simulated_annealing_on_PID(std::bind(reset_pid_angle, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
-    //                                         std::bind(move_and_measure_angle, std::placeholders::_1, std::placeholders::_2),
+    //                                         std::bind(move_and_measure_angle, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
     //                                         0.005, 0.01,
     //                                         PID{700, 0, 0},  100, 1000, 0.1,
     //                                         REDUCTOR_P/2, REDUCTOR_I_D/2, REDUCTOR_I_D/2);

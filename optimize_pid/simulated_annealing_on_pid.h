@@ -4,18 +4,12 @@
 
 #include "simulated_annealing/simulated_annealing.h"
 #include "logging/include/loggers/common_loggers.h"
+#include "pid.h"
 
 #include <chrono>
 
 
 #define MAX 0xffffffff
-
-
-class PID
-{
-    public:
-        double p, i, d;
-};
 
 
 class Simulated_annealing_on_PID
@@ -30,9 +24,10 @@ class Simulated_annealing_on_PID
                                                     - D value
                 - move_and_measure :    function that starts robot movement, measures parameters like current position and derivative, and orders robot going back to the origin point when main measured move is finished.
                                                 The function must return true if move succeeded, false otherwise.
-                                                It must take 2 arguments :
+                                                It must take 3 arguments :
                                                     - reference to variable that will contain difference between estimated and targeted robot position
                                                     - reference to variable that will contain the integral value of absolute measured position derivative
+                                                    - correct PID that can be use to safely return to origin point
                 - k :                   parameter that is used in weight formulae (see below)
                 - k_prim :              parameter that is used in weight formulae (see below) :
                                                 Parameters of weight function : weight = |diff_with_goal| + k*delay + kprim*integrated_differential where :
@@ -47,7 +42,7 @@ class Simulated_annealing_on_PID
                 - I_interval :          parameter that bounds possible gap between 2 successive I values
                 - D_interval :          parameter that bounds possible gap between 2 successive D values
         **/
-        Simulated_annealing_on_PID(const std::function<void(uint32_t, uint32_t, uint32_t)>& reset_pid, const std::function<bool(double&, double&)>& move_and_measure, double k, double k_prim, const PID& initial_pid, double initial_temperature = 100, size_t n_iterations = 1000, double target = 0.1, double P_interval = 1, double I_interval = 1, double D_interval = 1);
+        Simulated_annealing_on_PID(const std::function<void(uint32_t, uint32_t, uint32_t)>& reset_pid, const std::function<bool(double&, double&, const PID&)>& move_and_measure, double k, double k_prim, const PID& initial_pid, double initial_temperature = 100, size_t n_iterations = 1000, double target = 0.1, double P_interval = 1, double I_interval = 1, double D_interval = 1);
 
         double weight(const PID& pid);      // weight method performs an iteration of simutaed annealing algorithm :
                                             //    - robot pid is reset
@@ -62,7 +57,7 @@ class Simulated_annealing_on_PID
 
     private:
         std::function<void(uint32_t, uint32_t, uint32_t)> _reset_pid_function;
-        std::function<bool(double&, double&)> _move_and_measure_function;
+        std::function<bool(double&, double&, const PID&)> _move_and_measure_function;
 
         double _k, _k_prim;
 
