@@ -15,7 +15,7 @@ Simulated_annealing_on_PID::Simulated_annealing_on_PID(const std::function<void(
     _distrib_i(-I_interval/2, I_interval/2),
     _distrib_d(-D_interval/2, D_interval/2)
 {
-    _coeff = exp(log(target)/(double)(_n_iterations))>0.999999999?0.999999999:exp(log(target/_initial_temperature)/(double)(_n_iterations)); // coeff^n_iterations = target/_initial_temperature
+    _coeff = exp(log(target / _initial_temperature)/(double)(_n_iterations))>0.999999999?0.999999999:exp(log(target/_initial_temperature)/(double)(_n_iterations)); // coeff^n_iterations = target/_initial_temperature
 }
 
 
