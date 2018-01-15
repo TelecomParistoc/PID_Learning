@@ -18,7 +18,7 @@ void set_linear_i(uint32_t i)
 {setLinearI(i);}
 
 void set_linear_d(uint32_t d)
-{setLinarD(d);}
+{setLinearD(d);}
 
 void reset_pid_distance(uint32_t p, uint32_t i, uint32_t d)
 {

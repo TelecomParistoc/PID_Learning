@@ -8,7 +8,7 @@ ADDITIONAL = logs
 
 CC = g++
 CFLAGS = -Wall -Werror -Wextra -O1 -std=c++14 -I.. -g
-LDFLAGS =
+LDFLAGS = -lmotors -lrobotutils
 
 
 .PHONY: all clean $(BUILD)
