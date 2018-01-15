@@ -1,7 +1,6 @@
 #include "distance_actions.h"
 #include <motors/driver.h>
 #include <robotutils.h>
-
 #include <thread>
 #include <cmath>
 
@@ -35,13 +34,6 @@ bool reached = false;
 void distance_reached()
 {
     reached = true;
-}
-
-void move(double distance, void (*callback)(void))
-{
-    //TODO: bind with libmotors
-    (void)distance;
-    (void)callback;
 }
 
 double get_distance()

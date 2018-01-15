@@ -4,7 +4,7 @@ SRC = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(SRC)))
 
 CC = g++
-CFLAGS = -Wall -Werror -Wextra -O1 -std=c++11
+CFLAGS = -Wall -Werror -Wextra -O1 -std=c++11 -g
 
 
 all: createDir $(OBJ)
