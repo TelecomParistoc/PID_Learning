@@ -37,6 +37,8 @@ int main(int argc, char* argv[])
                                             0.00001, 30.0,
                                             PID{700, 0, 0},  100, 1000, 0.1,
                                             REDUCTOR_P/2, REDUCTOR_I/2, REDUCTOR_D/2);
+    setPosition(X_ORIGIN, Y_ORIGIN);
+    setHeading(ORIGIN_ORIENTATION);
     experiment.start();
 
     auto best_pid = experiment.best();

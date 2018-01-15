@@ -4,8 +4,8 @@
 #include <thread>
 #include <cmath>
 
-#define DIST_TO_MOVE 800
-#define DELAY_THRESHOLD 3000000.0*((double)DIST_TO_MOVE/200.0) //4000000 microseconds = 4 seconds to move
+#define DIST_TO_MOVE 200
+#define DELAY_THRESHOLD 10000000 //3000000.0*((double)DIST_TO_MOVE/200.0) //4000000 microseconds = 4 seconds to move
 #define SPEED_DIFFERENTIAL_THRESHOLD 100.0*((double)DIST_TO_MOVE/2000.0)  // TODO: fix it
 
 
@@ -57,12 +57,20 @@ void move_until_wall()
     //move(-DIST_TO_MOVE+20, move_to_callback);
     //while(!move_to_done)
     //    std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    logger::write_endline("Returns home");
+    move_to_done = false;
+    moveTo(X_ORIGIN, Y_ORIGIN, ORIGIN_ORIENTATION, move_to_callback);
+    while(!move_to_done)
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
 
     wait_wall_touched = true;
     moveUntilWall(DIR_BACKWARD, wall_touched);
 
     while(wait_wall_touched)
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
+
+    setPosition(X_ORIGIN, Y_ORIGIN);
+    setHeading(ORIGIN_ORIENTATION);
 }
 
 // move_and_measure_distance must start a defined robot move, measure differential on position, stop move when robot is doing weird, and return to starting point
@@ -121,7 +129,12 @@ bool move_and_measure_distance(double& total_delay, double& integrated_different
 
     move_until_wall();
 
-    printf("Reached ? %d %f %f %f\n", reached, return_pid.p, return_pid.i, return_pid.d);
-
+    if (!reached) {
+      if (total_delay > DELAY_THRESHOLD)
+        logger::write_endline("Move failed: Time Limit Exceeded");
+      if (integrated_differential >= SPEED_DIFFERENTIAL_THRESHOLD)
+        logger::write_endline("Move failed: Too much oscillations");
+    }
     return reached;
 }
+
