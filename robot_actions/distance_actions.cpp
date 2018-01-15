@@ -10,17 +10,17 @@
 #define DELAY_THRESHOLD 5000000.0*((double)DIST_TO_MOVE/2000.0) //5000000 microseconds = 5 seconds to move
 #define SPEED_DIFFERENTIAL_THRESHOLD 10.0*((double)DIST_TO_MOVE/2000.0)  // TODO: fix it
 
-
 //binding with libmotors
 void set_linear_p(uint32_t p){
-  setLinearP(p);
+  setLinearP((int) p);
 }
 void set_linear_i(uint32_t i){
-  setLinearI(i);
+  setLinearI((int) i);
 }
 void set_linear_d(uint32_t d){
-  setLinearD(d);
+  setLinearD((int) d);
 }
+
 
 void reset_pid_distance(uint32_t p, uint32_t i, uint32_t d)
 {

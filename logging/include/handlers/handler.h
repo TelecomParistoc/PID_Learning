@@ -80,7 +80,7 @@ template <typename Child>
 bool Handler<Child>::check_initialization_and_react()
 {
     if(!_initialized)
-        _initialized = Child::initialize();
+        _initialized = true; //Child::initialize();
 
     return _initialized;
 }

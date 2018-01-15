@@ -3,8 +3,8 @@ SRC_DIR = .
 SRC = $(wildcard $(SRC_DIR)/*.cpp)
 OBJ = $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(notdir $(SRC)))
 
-CC = /home/pi/sol_prog-raspberry-pi-gcc-binary-47d234b6e26a/gcc-7.2.0/bin/g++-7.2.0 # g++
-CFLAGS = -Wall -Werror -Wextra -O1 -std=c++14
+CC = g++
+CFLAGS = -Wall -Werror -Wextra -O1 -std=c++11
 
 
 all: createDir $(OBJ)

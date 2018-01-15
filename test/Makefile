@@ -6,9 +6,9 @@ BINS = $(patsubst %.cpp, %, $(SRCS))
 BUILD = build
 ADDITIONAL = logs
 
-CC = /usr/bin/gcc-7.2.0/bin/g++-7.2.0 #g++
-CFLAGS = -Wall -Werror -Wextra -O1 -std=c++14 -I.. -g
-LDFLAGS =-lmotors -lrobotutils
+CC = g++
+CFLAGS = -Wall -Werror -Wextra -O1 -std=c++11 -I.. -g
+LDFLAGS = -lmotors -lrobotutils
 
 
 .PHONY: all clean $(BUILD)
@@ -16,7 +16,7 @@ LDFLAGS =-lmotors -lrobotutils
 all : $(BUILD) $(ADDITIONAL) $(OBJ_DIRS) $(BINS)
 
 % : %.cpp
-	$(CC) $^ $(OBJS) $(CFLAGS) $(LDFLAGS) -o $(BUILD)/$@
+	$(CC) -v $^ $(OBJS) $(CFLAGS) -o $(BUILD)/$@ $(LDFLAGS)
 
 $(BUILD):
 	@mkdir -p $@

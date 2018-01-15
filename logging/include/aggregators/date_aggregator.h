@@ -20,7 +20,8 @@ class _impl_Date_aggregator
             auto tm = *std::localtime(&t);
 
             std::ostringstream oss;
-            oss<<std::put_time(&tm, "%d-%m-%Y_%H:%M:%S");
+            oss<<"put_time does not compile on raspi with gcc 4.9 !!";
+            //oss<<std::put_time(&tm, "%d-%m-%Y_%H:%M:%S");
             return oss.str();
         }
 
@@ -53,7 +54,7 @@ class _impl_Date_aggregator<Aggregator, typename std::enable_if<!has_aggregate_t
     public:
         static std::string aggregate(const std::string& input = "")
         {
-            return "["+date()+"]"+Aggregator::aggregate(input);
+            return input; //"Date removed because of bugs"; //"["+date()+"]"+Aggregator::aggregate(input);
         }
 };
 
