@@ -1,6 +1,6 @@
 #include "distance_actions.h"
-// #include "motordriver.h" // TODO: include lib motors
-
+#include <motors/driver.h>
+#include <robotutils.h>
 #include <thread>
 #include <cmath>
 
@@ -12,13 +12,13 @@
 
 //TODO: bind with libmotors
 void set_linear_p(uint32_t p)
-{(void)p;}
+{setLinearP(p);}
 
 void set_linear_i(uint32_t i)
-{(void)i;}
+{setLinearI(i);}
 
 void set_linear_d(uint32_t d)
-{(void)d;}
+{setLinarD(d);}
 
 void reset_pid_distance(uint32_t p, uint32_t i, uint32_t d)
 {
@@ -33,13 +33,6 @@ bool reached = false;
 void distance_reached()
 {
     reached = true;
-}
-
-void move(double distance, void (*callback)(void))
-{
-    //TODO: bind with libmotors
-    (void)distance;
-    (void)callback;
 }
 
 double get_distance()
