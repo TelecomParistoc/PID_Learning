@@ -16,11 +16,20 @@ class _impl_Date_aggregator
     public:
         static std::string date()
         {
-            auto t = std::time(nullptr);
-            auto tm = *std::localtime(&t);
+            //auto t = std::time(nullptr);
+            //auto tm = *std::localtime(&t);
 
             std::ostringstream oss;
-            oss<<std::put_time(&tm, "%d-%m-%Y_%H:%M:%S");
+            char date_str[60];
+            time_t rawtime;
+            struct tm * timeinfo;
+
+            time(&rawtime);
+            timeinfo = localtime(&rawtime);
+
+            if(strftime(date_str, sizeof(date_str), "%d-%m-%Y_%H:%M:%S", timeinfo))
+                oss<<date_str;
+            //oss<<std::put_time(&tm, "%d-%m-%Y_%H:%M:%S");
             return oss.str();
         }
 
