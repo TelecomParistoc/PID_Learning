@@ -4,9 +4,9 @@
 #include <thread>
 #include <cmath>
 
-#define DIST_TO_MOVE 200
-#define DELAY_THRESHOLD 10000000 //3000000.0*((double)DIST_TO_MOVE/200.0) //4000000 microseconds = 4 seconds to move
-#define SPEED_DIFFERENTIAL_THRESHOLD 100.0*((double)DIST_TO_MOVE/2000.0)  // TODO: fix it
+#define DIST_TO_MOVE 500
+#define DELAY_THRESHOLD 150000000 *((double)DIST_TO_MOVE/1000.0) //15s to move 1m
+#define SPEED_DIFFERENTIAL_THRESHOLD 500.0*((double)DIST_TO_MOVE/1000.0)  // TODO: fix it
 
 
 void set_linear_p(uint32_t p)
@@ -137,4 +137,3 @@ bool move_and_measure_distance(double& total_delay, double& integrated_different
     }
     return reached;
 }
-
