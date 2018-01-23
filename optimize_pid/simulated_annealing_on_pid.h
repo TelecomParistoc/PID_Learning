@@ -28,12 +28,15 @@ class Simulated_annealing_on_PID
                                                     - reference to variable that will contain difference between estimated and targeted robot position
                                                     - reference to variable that will contain the integral value of absolute measured position derivative
                                                     - correct PID that can be use to safely return to origin point
-                - k :                   parameter that is used in weight formulae (see below)
-                - k_prim :              parameter that is used in weight formulae (see below) :
-                                                Parameters of weight function : weight = |diff_with_goal| + k*delay + kprim*integrated_differential where :
-                                                    - diff_with_goal is difference between estimated and targeted robot position
-                                                    - delay is time robot takes to perform chosen command
-                                                    - integrated_differential is the integral value of absolute measured position derivative
+                - k :                         parameter that is used in weight formulae (see below)
+                - k_prim (temporary deleted): parameter that is used in weight formulae (see below) :
+                         (temporary deleted) Parameters of weight function : weight = |diff_with_goal| + k*delay + kprim*integrated_differential where :
+                         (temporary deleted)     - diff_with_goal is difference between estimated and targeted robot position
+                         (temporary deleted)     - delay is time robot takes to perform chosen command
+                         (temporary deleted)     - integrated_differential is the integral value of absolute measured position derivative
+                     Parameters of weight function : weight = delay + k*integrated_differential where :
+                         - delay is time robot takes to perform chosen command
+                         - integrated_differential is the integral value of absolute measured position derivative
                 - initial_pid :         parameter that corresponds to initial (non optimized but ok) PID which will be set
                 - initial_temperature : parameter that influences exploration/exploitation ratio : high initial temperature means more exploration/less exploitation
                 - n_iterations :        parameter that controls number of PID that will be tested by the robot
@@ -42,7 +45,7 @@ class Simulated_annealing_on_PID
                 - I_interval :          parameter that bounds possible gap between 2 successive I values
                 - D_interval :          parameter that bounds possible gap between 2 successive D values
         **/
-        Simulated_annealing_on_PID(const std::function<void(uint32_t, uint32_t, uint32_t)>& reset_pid, const std::function<bool(double&, double&, const PID&)>& move_and_measure, double k, double k_prim, const PID& initial_pid, double initial_temperature = 100, size_t n_iterations = 1000, double target = 0.1, double P_interval = 1, double I_interval = 1, double D_interval = 1);
+        Simulated_annealing_on_PID(const std::function<void(uint32_t, uint32_t, uint32_t)>& reset_pid, const std::function<bool(double&, double&, const PID&)>& move_and_measure, double k, /*double k_prim,*/ const PID& initial_pid, double initial_temperature = 100, size_t n_iterations = 1000, double target = 0.1, double P_interval = 1, double I_interval = 1, double D_interval = 1);
 
         double weight(const PID& pid);      // weight method performs an iteration of simutaed annealing algorithm :
                                             //    - robot pid is reset
@@ -59,7 +62,7 @@ class Simulated_annealing_on_PID
         std::function<void(uint32_t, uint32_t, uint32_t)> _reset_pid_function;
         std::function<bool(double&, double&, const PID&)> _move_and_measure_function;
 
-        double _k, _k_prim;
+        double _k/*, _k_prim*/;
 
         PID _initial_pid;
         PID _best_pid;
