@@ -1,5 +1,6 @@
 #include "distance_actions.h"
-// #include "motordriver.h" // TODO: include lib motors
+#include <motors/driver.h>
+#include <robotutils.h>
 
 #include <thread>
 #include <cmath>
@@ -10,15 +11,16 @@
 #define SPEED_DIFFERENTIAL_THRESHOLD 10.0*((double)DIST_TO_MOVE/2000.0)  // TODO: fix it
 
 
-//TODO: bind with libmotors
-void set_linear_p(uint32_t p)
-{(void)p;}
-
-void set_linear_i(uint32_t i)
-{(void)i;}
-
-void set_linear_d(uint32_t d)
-{(void)d;}
+//binding with libmotors
+void set_linear_p(uint32_t p){
+  SetLinearP(p);
+}
+void set_linear_i(uint32_t i){
+  SetLinearI(i);
+}
+void set_linear_d(uint32_t d){
+  setLinearD(d);
+}
 
 void reset_pid_distance(uint32_t p, uint32_t i, uint32_t d)
 {
