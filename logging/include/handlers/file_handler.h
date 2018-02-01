@@ -44,9 +44,9 @@ class File_handler_fail_behaviour : public Ostream_handler<File_handler_fail_beh
         static bool initialize()
         {
             if(trunc_if_exists)
-                _private_ostream = std::unique_ptr<std::ofstream>(new std::ofstream(Filename, std::ios::out | std::ios::trunc);
+                _private_ostream = std::unique_ptr<std::ofstream>(new std::ofstream(Filename, std::ios::out | std::ios::trunc));
             else
-                _private_ostream = std::unique_ptr<std::ofstream>(new std::ofstream(Filename, std::ios::out | std::ios::app);
+                _private_ostream = std::unique_ptr<std::ofstream>(new std::ofstream(Filename, std::ios::out | std::ios::app));
 
             if(!_private_ostream)
             {
