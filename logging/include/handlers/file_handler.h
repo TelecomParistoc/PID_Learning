@@ -122,7 +122,7 @@ class Dynamic_header_file_handler_fail_behaviour : public Ostream_handler<Dynami
         }
 
     private:
-        static std::auto_ptr<std::ofstream> _private_ostream;
+        static std::shared_ptr<std::ofstream> _private_ostream;
 };
 
 template <typename Filename_aggregator, typename Behaviour_factory, typename Input_type_Factory, Input_type_Factory Bad_File_Behaviour, bool trunc_if_exists>
