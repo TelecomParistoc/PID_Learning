@@ -16,9 +16,9 @@ class File_handler : public Ostream_handler<File_handler<Filename, trunc_if_exis
         static bool initialize()
         {
             if(trunc_if_exists)
-                _private_ostream = std::move(std::make_unique<std::ofstream>(new std::ofstream(Filename, std::ios::out | std::ios::trunc)));
+                _private_ostream = std::unique_ptr<std::ofstream>(new std::ofstream(Filename, std::ios::out | std::ios::trunc));
             else
-                _private_ostream = std::move(std::make_unique<std::ofstream>(new std::ofstream(Filename, std::ios::out | std::ios::app)));
+                _private_ostream = std::unique_ptr<std::ofstream>(new std::ofstream(Filename, std::ios::out | std::ios::app));
 
             if(!_private_ostream)
                 throw std::runtime_error("Error: Unable to open \""+std::string(Filename)+"\" for logging. (you can try to create directory to solve the issue)");
@@ -76,11 +76,11 @@ class Dynamic_header_file_handler : public Ostream_handler<Dynamic_header_file_h
     public:
         static bool initialize()
         {
-            /*if(trunc_if_exists)
-                _private_ostream = std::move(std::make_unique<std::ofstream>(new std::ofstream((char*)(Filename_aggregator::aggregate("").c_str()), std::ios::out | std::ios::trunc)));
+            if(trunc_if_exists)
+                _private_ostream = std::unique_ptr<std::ofstream>(new std::ofstream(Filename_aggregator::aggregate(""), std::ios::out | std::ios::trunc));
             else
-                _private_ostream = std::move(std::make_unique<std::ofstream>(new std::ofstream((char*)(Filename_aggregator::aggregate("").c_str()), std::ios::out | std::ios::app)));
-*/
+                _private_ostream = std::unique_ptr<std::ofstream>(new std::ofstream(Filename_aggregator::aggregate(""), std::ios::out | std::ios::app));
+
             if(!_private_ostream)
                 throw std::runtime_error("Error: Unable to open \""+Filename_aggregator::aggregate("")+"\" for logging. (you can try to create directory to solve the issue)");
 
@@ -104,11 +104,11 @@ class Dynamic_header_file_handler_fail_behaviour : public Ostream_handler<Dynami
     public:
         static bool initialize()
         {
-            /*if(trunc_if_exists)
-                _private_ostream = std::move(std::make_unique<std::ofstream>(new std::ofstream((char*)(Filename_aggregator::aggregate("").c_str()), std::ios::out | std::ios::trunc)));
+            if(trunc_if_exists)
+                _private_ostream = std::unique_ptr<std::ofstream>(new std::ofstream(Filename_aggregator::aggregate(""), std::ios::out | std::ios::trunc));
             else
-                _private_ostream = std::move(std::make_unique<std::ofstream>(new std::ofstream((char*)(Filename_aggregator::aggregate("").c_str()), std::ios::out | std::ios::app)));
-*/
+                _private_ostream = std::unique_ptr<std::ofstream>(new std::ofstream(Filename_aggregator::aggregate(""), std::ios::out | std::ios::app));
+
             if(!_private_ostream)
             {
                 Behaviour_factory::reacts(Bad_File_Behaviour, Filename_aggregator::aggregate(""));
