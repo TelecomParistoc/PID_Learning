@@ -10,7 +10,6 @@
 #define SPEED_DIFFERENTIAL_THRESHOLD 10.0*((double)DIST_TO_MOVE/2000.0)  // TODO: fix it
 
 
-//TODO: bind with libmotors
 void set_linear_p(uint32_t p)
 {setLinearP(p);}
 
@@ -29,6 +28,7 @@ void reset_pid_distance(uint32_t p, uint32_t i, uint32_t d)
 
 
 bool reached = false;
+bool wait_wall_touched = false;
 
 void distance_reached()
 {
@@ -37,13 +37,21 @@ void distance_reached()
 
 double get_distance()
 {
-    //TODO: bind with libmotors to get current distance
-    return 0;
+    return (double)getDistance();
+}
+
+void wall_touched()
+{
+    wait_wall_touched = false;
 }
 
 void move_until_wall()
 {
-    //TODO: implement recalibration
+    wait_wall_touched = true;
+    moveUntilWall(DIR_BACKWARD, wall_touched);
+
+    while(wait_wall_touched)
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
 }
 
 // move_and_measure_distance must start a defined robot move, measure differential on position, stop move when robot is doing weird, and return to starting point
