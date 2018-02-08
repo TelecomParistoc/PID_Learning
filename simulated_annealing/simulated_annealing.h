@@ -5,6 +5,7 @@
 #include <functional>
 #include <random>
 #include <cmath>
+#include <iostream>
 
 
 template <typename T, typename U, typename V>
@@ -25,8 +26,9 @@ T simulated_annealing(size_t n_iterations, const T& initial_value, const std::fu
     for(; n_iterations > 0; n_iterations--)
     {
         T next_value = neighbour_function(cur_value);
+        std::cout<<next_value<<std::endl;
         weight = energy_function(next_value);
-
+        std::cout<<weight<<std::endl;
         if(weight < best_weight)
         {
             best_value = next_value;
