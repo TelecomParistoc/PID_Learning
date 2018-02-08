@@ -23,8 +23,8 @@ double Simulated_annealing_on_PID::weight(const PID& pid)
 {
     if(pid.p < 0 || pid.i < 0 || pid.d < 0)
     {
-        logger::write_endline("Not weighted because pid.p is negative");
-        return MAX;
+        logger::write_endline("Not weighted because pid.p, pid.i or pid.d is negative");
+        return -2;
     }
 
     logger::write_endline("Testing PID (", pid.p, ", ", pid.i, ", ", pid.d, ")");
@@ -35,7 +35,7 @@ double Simulated_annealing_on_PID::weight(const PID& pid)
     if(!_move_and_measure_function(delay, integrated_differential, _best_pid)) // if move failed or too much difference with target
     {
         logger::write_endline("Not weighted because move failed (delay = ", delay, ", integrated = ", integrated_differential,")");
-        return MAX;
+        return (double)MAX/100.0;
     }
 
     // double res = fabs(diff_goal)+_k*delay+_k_prim*integrated_differential;

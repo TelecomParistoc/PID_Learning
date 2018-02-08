@@ -2,6 +2,9 @@
 #define SIMULATED_ANNEALING_H
 
 
+#define LIMIT 0xfffffffe
+
+
 #include <functional>
 #include <random>
 #include <cmath>
@@ -9,7 +12,7 @@
 
 
 template <typename T, typename U, typename V>
-T simulated_annealing(size_t n_iterations, const T& initial_value, const std::function<U(const T&)>& energy_function, const std::function<V(size_t, V)>& temperature_function, const std::function<T(const T&)>& neighbour_function)
+T simulated_annealing(size_t n_iterations, const T& initial_value, const std::function<U(const T&)>& energy_function, const std::function<V(size_t, V)>& temperature_function, const std::function<T(const T&)>& neighbour_function, double min = -1)
 {
     U weight = energy_function(initial_value);
     U best_weight = weight;
@@ -26,9 +29,17 @@ T simulated_annealing(size_t n_iterations, const T& initial_value, const std::fu
     for(; n_iterations > 0; n_iterations--)
     {
         T next_value = neighbour_function(cur_value);
-        std::cout<<next_value<<std::endl;
         weight = energy_function(next_value);
-        std::cout<<weight<<std::endl;
+
+        while(next_value <= min)
+        {
+            next_value = neighbour_function(cur_value);
+            weight = energy_function(next_value);
+        }
+
+        if(weight > LIMIT)
+            continue;
+
         if(weight < best_weight)
         {
             best_value = next_value;
