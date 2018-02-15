@@ -35,7 +35,7 @@ double Simulated_annealing_on_PID::weight(const PID& pid)
     if(!_move_and_measure_function(delay, integrated_differential, _best_pid)) // if move failed or too much difference with target
     {
         logger::write_endline("Not weighted because move failed (delay = ", delay, ", integrated = ", integrated_differential,")");
-        return (double)MAX/100.0;
+        return (double)MAX/1000.0;
     }
 
     // double res = fabs(diff_goal)+_k*delay+_k_prim*integrated_differential;

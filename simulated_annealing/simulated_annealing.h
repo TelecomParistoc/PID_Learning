@@ -28,7 +28,7 @@ T simulated_annealing(size_t n_iterations, const T& initial_value, const std::fu
         T next_value = neighbour_function(cur_value);
         weight = energy_function(next_value);
 
-        while(next_value <= min)
+        while(weight <= min)
         {
             next_value = neighbour_function(cur_value);
             weight = energy_function(next_value);
@@ -42,10 +42,10 @@ T simulated_annealing(size_t n_iterations, const T& initial_value, const std::fu
             continue;
         }
 
-        std::cout<<weight<<" "<<temperature<<" "<<std::exp(-delta/temperature)<<std::endl;
-
         temperature = temperature_function(n_iterations, temperature);
         auto delta = weight-best_weight;
+
+        std::cout<<weight<<" "<<temperature<<" "<<std::exp(-delta/temperature)<<std::endl;
 
         if(delta > 12.0*temperature) // exp(-12)<0.00001 : we can bypass evaluation of following condition
             continue;
