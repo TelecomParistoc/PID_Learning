@@ -20,9 +20,9 @@ void set_linear_d(uint32_t d)
 
 void reset_pid_distance(uint32_t p, uint32_t i, uint32_t d)
 {
-    set_linear_p(p);
-    set_linear_i(i);
-    set_linear_d(d);
+    set_linear_p(700);
+    set_linear_i(0);
+    set_linear_d(0);
 }
 
 
@@ -122,6 +122,8 @@ bool move_and_measure_distance(double& total_delay, double& integrated_different
     move_until_wall();
 
     printf("Reached ? %d\n", reached);
+    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+    printf("Waited\n");
 
     return reached;
 }
