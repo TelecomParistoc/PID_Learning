@@ -4,10 +4,9 @@
 #include <thread>
 #include <cmath>
 
-
-#define DIST_TO_MOVE 2000
-#define DELAY_THRESHOLD 5000000.0*((double)DIST_TO_MOVE/2000.0) //5000000 microseconds = 5 seconds to move
-#define SPEED_DIFFERENTIAL_THRESHOLD 10.0*((double)DIST_TO_MOVE/2000.0)  // TODO: fix it
+#define DIST_TO_MOVE 200
+#define DELAY_THRESHOLD 5000000.0*((double)DIST_TO_MOVE/200.0) //5000000 microseconds = 5 seconds to move
+#define SPEED_DIFFERENTIAL_THRESHOLD 100.0*((double)DIST_TO_MOVE/2000.0)  // TODO: fix it
 
 
 void set_linear_p(uint32_t p)
@@ -29,6 +28,7 @@ void reset_pid_distance(uint32_t p, uint32_t i, uint32_t d)
 
 bool reached = false;
 bool wait_wall_touched = false;
+bool move_to_done = false;
 
 void distance_reached()
 {
@@ -42,11 +42,22 @@ double get_distance()
 
 void wall_touched()
 {
+    printf("Wall reached\n");
     wait_wall_touched = false;
+}
+
+void move_to_callback()
+{
+  move_to_done = true;
 }
 
 void move_until_wall()
 {
+    move_to_done = false;
+    moveTo(X_ORIGIN, Y_ORIGIN, -1, move_to_callback);
+    while(!move_to_done)
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+
     wait_wall_touched = true;
     moveUntilWall(DIR_BACKWARD, wall_touched);
 

@@ -4,7 +4,7 @@
 #include "robot_actions/fake_actions.h"
 
 #include <iostream>
-
+#include <motors/driver.h>
 
 #define DEBUG true
 
@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
     // std::cout<<"Best fake PID found is : ("<<best_pid.p<<", "<<best_pid.i<<", "<<best_pid.d<<")"<<std::endl;
 
 
-
+    setPosition(X_ORIGIN, Y_ORIGIN);
     Simulated_annealing_on_PID experiment(  std::bind(reset_pid_distance, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
                                             std::bind(move_and_measure_distance, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
                                             1000.0,
