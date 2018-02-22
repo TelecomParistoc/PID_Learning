@@ -8,9 +8,9 @@
 
 #define DEBUG true
 
-#define REDUCTOR_P 1000
-#define REDUCTOR_I 200
-#define REDUCTOR_D 12000
+#define REDUCTOR_P 1200
+#define REDUCTOR_I 300
+#define REDUCTOR_D 14000
 
 
 
@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 
     Simulated_annealing_on_PID experiment(  std::bind(reset_pid_distance, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
                                             std::bind(move_and_measure_distance, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
-                                            0.0001, 100.0,
+                                            0.00001, 30.0,
                                             PID{700, 0, 0},  100, 1000, 0.1,
                                             REDUCTOR_P/2, REDUCTOR_I/2, REDUCTOR_D/2);
     experiment.start();

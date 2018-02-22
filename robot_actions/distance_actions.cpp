@@ -4,8 +4,8 @@
 #include <thread>
 #include <cmath>
 
-#define DIST_TO_MOVE 400
-#define DELAY_THRESHOLD 3000000.0*((double)DIST_TO_MOVE/200.0) //5000000 microseconds = 5 seconds to move
+#define DIST_TO_MOVE 800
+#define DELAY_THRESHOLD 4000000.0*((double)DIST_TO_MOVE/200.0) //4000000 microseconds = 4 seconds to move
 #define SPEED_DIFFERENTIAL_THRESHOLD 100.0*((double)DIST_TO_MOVE/2000.0)  // TODO: fix it
 
 
@@ -122,8 +122,6 @@ bool move_and_measure_distance(double& total_delay, double& integrated_different
     move_until_wall();
 
     printf("Reached ? %d %f %f %f\n", reached, return_pid.p, return_pid.i, return_pid.d);
-    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-    printf("Waited\n");
 
     return reached;
 }
