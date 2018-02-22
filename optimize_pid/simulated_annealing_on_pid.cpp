@@ -7,6 +7,7 @@ Simulated_annealing_on_PID::Simulated_annealing_on_PID(const std::function<void(
     _k(k),
     //_k_prim(k_prim),
     _initial_pid(initial_pid),
+    _best_pid(initial_pid),
     _best_weight(-1),
     _initial_temperature(initial_temperature),
     _n_iterations(n_iterations),
