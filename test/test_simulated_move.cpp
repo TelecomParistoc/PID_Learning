@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 
     Simulated_annealing_on_PID experiment(  std::bind(reset_pid_distance, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
                                             std::bind(move_and_measure_distance, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
-                                            1000.0,
+                                            0.0001, 100.0,
                                             PID{700, 0, 0},  100, 1000, 0.1,
                                             REDUCTOR_P/2, REDUCTOR_I/2, REDUCTOR_D/2);
     experiment.start();
