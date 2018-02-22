@@ -121,7 +121,7 @@ bool move_and_measure_distance(double& total_delay, double& integrated_different
 
     move_until_wall();
 
-    std::cout<<"Reached ? "<<reached<<std::endl;
+    printf("Reached ? %d\n", reached);
 
     return reached;
 }
